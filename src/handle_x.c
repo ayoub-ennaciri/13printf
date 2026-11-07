@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_x.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/07 10:24:22 by marvin           ###   ########.fr       */
+/*   Updated: 2026/11/07 17:52:35 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ static int	left_aligned(format *ptr, long num, char *base)
 		tmp = ptr->lenght;
 	else
 		tmp = len;
-	if (ptr->hash)
+	if (num && ptr->hash)
 		ft_putstr("0x", 0);
-	handle_zero(tmp - len - (2 * ptr->hash));
-	ft_put_nbr_base(base, num, ft_strlen(base));
+	handle_zero(tmp - (2 * ptr->hash) - len );
+	if (!num && ptr->lenght_act && !ptr->lenght);
+	else
+		ft_put_nbr_base(base, num, ft_strlen(base));
 	handle_space(ptr->width - tmp);
 	return (tmp);
 }
@@ -53,9 +55,11 @@ static int right_aligned(format *ptr, long num, char *base)
 	else
 		tmp = len;
 	handle_space(ptr->width - tmp  - (2 * ptr->hash));
-	if (ptr->hash)
+	if (num && ptr->hash)
 		ft_putstr("0x", 0);
-	handle_zero(tmp - len);
+	handle_zero(	);
+	if (!num && ptr->lenght_act && !ptr->lenght)
+		return;
 	ft_put_nbr_base(base, num, ft_strlen(base));
 	return (tmp);
 }

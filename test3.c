@@ -1,173 +1,95 @@
-#include <stdio.h>
+
 #include "include/ft_printf.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <limits.h>
 
+int ft_printf(const char *format, ...);
+
+#define TEST(fmt, ...) do { \
+    printf("\n========================================\n"); \
+    printf("FORMAT: %s\n", fmt); \
+    printf("----------------------------------------\n"); \
+    printf("ORIGINAL : "); \
+    fflush(stdout); \
+    printf(fmt, ##__VA_ARGS__); \
+    printf("\n"); \
+    fflush(stdout); \
+    printf("FT_PRINTF: "); \
+    fflush(stdout); \
+    ft_printf(fmt, ##__VA_ARGS__); \
+    printf("\n"); \
+    fflush(stdout); \
+} while (0)
 int main(void)
 {
-    int i = -42;
-    int positive = 42;
-    int zero = 0;
-    unsigned int u = 42;
-    unsigned int big = 4294967295u;
-    char c = 'A';
-    char *s = "Hello, World!";
-    void *p = &i;
+    /* d and i */
+    TEST("|%d|", 0);
+    TEST("|%.0d|", 0);
+    TEST("|%10.0d|", 0);
+    TEST("|%-10.0d|", 0);
+    TEST("|%+10.0d|", 0);
+    TEST("|% 10.0d|", 0);
+    TEST("|%010d|", 42);
+    TEST("|%-010d|", 42);
+    TEST("|%+010d|", 42);
+    TEST("|%-+10d|", 42);
+    TEST("|% 10d|", 42);
+    TEST("|%+ 10d|", 42);
+    TEST("|%d|", INT_MIN);
+    TEST("|%d|", INT_MAX);
 
-    // Basic conversions
-    printf("=== BASIC ===\n");
-	ft_printf("=== BASIC ===\n");
-    printf("%d\n", i);
-	ft_printf("%d\n", i);
-    printf("%i\n", positive);
-	ft_printf("%i\n", positive);
-    printf("%u\n", u);
-	ft_printf("%u\n", u);
-    printf("%x\n", u);
-	ft_printf("%x\n", u);
-    printf("%X\n", u);
-	ft_printf("%X\n", u);
-    printf("%c\n", c);
-	ft_printf("%c\n", c);
-    printf("%s\n", s);
-	ft_printf("%s\n", s);
-    printf("%p\n", p);
-	ft_printf("%p\n", p);
-    printf("%%\n");
-	ft_printf("%%\n");
+    /* u */
+    TEST("|%u|", 0);
+    TEST("|%u|", UINT_MAX);
+    TEST("|%010u|", 42);
+    TEST("|%-10u|", 42);
+    TEST("|%10.5u|", 42);
+    TEST("|%010.5u|", 42);
 
-    // Widths
-    printf("\n=== WIDTHS ===\n");
-	ft_printf("\n=== WIDTHS ===\n");
-    printf("[%5d]\n", i);
-	ft_printf("[%5d]\n", i);
-    printf("[%10d]\n", positive);
-	ft_printf("[%10d]\n", positive);
-    printf("[%1d]\n", i);
-	ft_printf("[%1d]\n", i);
-    printf("[%20s]\n", s);
-	ft_printf("[%20s]\n", s);
-    printf("[%10c]\n", c);
-	ft_printf("[%10c]\n", c);
-    printf("[%10x]\n", u);
-	ft_printf("[%10x]\n", u);
+    /* x and X */
+    TEST("|%x|", 0);
+    TEST("|%#x|", 0);
+    TEST("|%#X|", 0);
+    TEST("|%#x|", 42);
+    TEST("|%#X|", 42);
+    TEST("|%010x|", 42);
+    TEST("|%-10x|", 42);
+    TEST("|%#10x|", 42);
+    TEST("|%#010x|", 42);
+    TEST("|%-#10x|", 42);
+    TEST("|%#.0x|", 0);
+    TEST("|%#10.5x|", 42);
 
-    // Flags
-    printf("\n=== FLAGS ===\n");
-	ft_printf("\n=== FLAGS ===\n");
-    printf("[%+d]\n", positive);
-	ft_printf("[%+d]\n", positive);
-    printf("[%+d]\n", i);
-	ft_printf("[%+d]\n", i);
-    printf("[% d]\n", positive);
-	ft_printf("[% d]\n", positive);
-    printf("[% d]\n", i);
-	ft_printf("[% d]\n", i);
-    printf("[%-10d]\n", positive);
-	ft_printf("[%-10d]\n", positive);
-    printf("[%010d]\n", positive);
-	ft_printf("[%010d]\n", positive);
-    printf("[%#x]\n", u);
-	ft_printf("[%#x]\n", u);
-    printf("[%#X]\n", u);
-	ft_printf("[%#X]\n", u);
-    //printf("[%#o]\n", u);
-	//ft_printf("[%#o]\n", u);
+    /* c */
+    TEST("|%c|", 'A');
+    TEST("|%5c|", 'A');
+    TEST("|%-5c|", 'A');
+    TEST("|%05c|", 'A');
 
-    // Precisions
-    printf("\n=== PRECISIONS ===\n");
-	ft_printf("\n=== PRECISIONS ===\n");
-    printf("[%.0d]\n", zero);
-	ft_printf("[%.0d]\n", zero);
-    printf("[%.1d]\n", i);
-	ft_printf("[%.1d]\n", i);
-    printf("[%.5d]\n", positive);
-	ft_printf("[%.5d]\n", positive);
-    printf("[%.10d]\n", i);
-	ft_printf("[%.10d]\n", i);
-    printf("[%.5u]\n", u);
-	ft_printf("[%.5u]\n", u);
-    printf("[%.8x]\n", u);
-	ft_printf("[%.8x]\n", u);
-    printf("[%.5s]\n", s);
-	ft_printf("[%.5s]\n", s);
-    printf("[%.0s]\n", s);
-	ft_printf("[%.0s]\n", s);
+    /* s */
+    TEST("|%s|", "Hello");
+    TEST("|%10s|", "Hello");
+    TEST("|%-10s|", "Hello");
+    TEST("|%.3s|", "Hello");
+    TEST("|%10.3s|", "Hello");
+    TEST("|%-10.3s|", "Hello");
 
-    // Width + precision
-    printf("\n=== WIDTH + PRECISION ===\n");
-	ft_printf("\n=== WIDTH + PRECISION ===\n");
-    printf("[%10.5d]\n", positive);
-	ft_printf("[%10.5d]\n", positive);
-    printf("[%-10.5d]\n", positive);
-	ft_printf("[%-10.5d]\n", positive);
-    printf("[%010.5d]\n", positive);
-	ft_printf("[%010.5d]\n", positive);
-    printf("[%8.3x]\n", u);
-	ft_printf("[%8.3x]\n", u);
-    printf("[%10.5s]\n", s);
-	ft_printf("[%10.5s]\n", s);
-    printf("[%20.10s]\n", s);
-	ft_printf("[%20.10s]\n", s);
+    /* p */
+    TEST("|%p|", (void *)0);
+    TEST("|%p|", (void *)42);
+    TEST("|%20p|", (void *)42);
+    TEST("|%-20p|", (void *)42);
 
-    // Combined flags
-    printf("\n=== COMBINED FLAGS ===\n");
-	ft_printf("\n=== COMBINED FLAGS ===\n");
-    printf("[%+010d]\n", positive);
-	ft_printf("[%+010d]\n", positive);
-    printf("[%+010d]\n", i);
-	ft_printf("[%+010d]\n", i);
-    printf("[% -010d]\n", i);
-	ft_printf("[% -010d]\n", i);
-    printf("[%#010x]\n", u);
-	ft_printf("[%#010x]\n", u);
-    printf("[%#10X]\n", u);
-	ft_printf("[%#10X]\n", u);
-    printf("[%-#10x]\n", u);
-	ft_printf("[%-#10x]\n", u);
-
-    // Zero and edge cases
-    printf("\n=== EDGE CASES ===\n");
-	ft_printf("\n=== EDGE CASES ===\n");
-    printf("[%d]\n", zero);
-	ft_printf("[%d]\n", zero);
-    printf("[%.0d]\n", zero);
-	ft_printf("[%.0d]\n", zero);
-    printf("[%5.0d]\n", zero);
-	ft_printf("[%5.0d]\n", zero);
-    printf("[%+d]\n", zero);
-	ft_printf("[%+d]\n", zero);
-    printf("[%#x]\n", zero);
-	ft_printf("[%#x]\n", zero);
-    printf("[%#X]\n", zero);
-	ft_printf("[%#X]\n", zero);
-    //printf("[%#o]\n", zero);
-	//ft_printf("[%#o]\n", zero);
-    printf("[%u]\n", big);
-	ft_printf("[%u]\n", big);
-    printf("[%20p]\n", p);
-	ft_printf("[%20p]\n", p);
-
-    // Characters and strings
-    printf("\n=== CHARACTERS AND STRINGS ===\n");
-	ft_printf("\n=== CHARACTERS AND STRINGS ===\n");
-    printf("[%5c]\n", c);
-	ft_printf("[%5c]\n", c);
-    printf("[%-5c]\n", c);
-	ft_printf("[%-5c]\n", c);
-    printf("[%5.3s]\n", s);
-	ft_printf("[%5.3s]\n", s);
-    printf("[%-15.5s]\n", s);
-	ft_printf("[%-15.5s]\n", s);
-
-    // Literal percent
-    printf("\n=== PERCENT ===\n");
-	ft_printf("\n=== PERCENT ===\n");
-    printf("100%%\n");
-	ft_printf("100%%\n");
-    printf("[%5%]\n");
-	ft_printf("[%5%]\n");
-    printf("[%-5%]\n");
-	ft_printf("[%-5%]\n");
+    /* % */
+    TEST("|%%|");
+    TEST("|%5%|");
+    TEST("|%-5%|");
+    TEST("|%05%|");
 
     return 0;
 }

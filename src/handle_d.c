@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_d.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/07 10:01:35 by marvin           ###   ########.fr       */
+/*   Updated: 2026/11/07 16:25:30 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ static void	left_aligned(format *ptr, long num, int tmp, int len)
 	if (num < 0)
 		ft_putchar('-');
 	handle_zero(tmp - len);
-	ft_put_nbr_base(BASE_10, num, ft_strlen(BASE_10));
+	if (!num && ptr->lenght_act && !ptr->lenght);
+	else
+		ft_put_nbr_base(BASE_10, num, ft_strlen(BASE_10));
 	handle_space(ptr->width - tmp + s);
 }
 
@@ -70,6 +72,8 @@ static void right_aligned(format *ptr, long num, int tmp, int len)
 	if (ptr->space && !ptr->plus)
 		ft_putchar(' ');
 	handle_zero(tmp - len);
+	if (!num && ptr->lenght_act && !ptr->lenght)
+		return;
 	ft_put_nbr_base(BASE_10, num, ft_strlen(BASE_10));
 }
 
