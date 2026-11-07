@@ -6,12 +6,11 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 21:37:15 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/10/31 15:46:23 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/05 15:32:26 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
-
 
 int ft_putchar(int c)
 {

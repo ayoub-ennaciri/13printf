@@ -1,64 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser0.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 14:16:03 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/10/31 16:19:48 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/06 22:25:15 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parser.h"
 #include "../include/libft.h"
-
-
-int one_of(char c, char	*set)
-{
-	while (*set)
-	{
-		if(c == *set)
-			return (1);
-		set++;
-	}
-	return (0);
-}
-
-void	get_flags(char **s, format	*ptr)
-{
-	while (one_of(**s, "+-0 #"))
-	{
-		if (**s == ' ' && !ptr->space)
-			ptr->space = TRUE;
-		else if (**s == '-' && !ptr->minus)
-			ptr->minus = TRUE;
-		else if (**s == '+' && !ptr->plus)
-			ptr->plus = TRUE;
-		else if (**s == '0' && !ptr->zero)
-			ptr->zero = TRUE;
-		else if (**s == '#' && !ptr->hash)
-			ptr->hash = TRUE;
-		else
-			ptr->valid = FALSE;
-		(*s)++;
-	}
-}
-
-void	get_lenght(char **s, format	*ptr)
-{
-	size_t	num;
-
-	num = 0;
-	while (ft_isdigit(**s))
-	{
-		ptr->lenght_act = TRUE;
-		if ((num * 10) + (**s - '0') <= 2147483647)
-			num = (num * 10) + (**s - '0');
-		(*s)++;
-	}
-	ptr->lenght = num ;
-}
 
 void	get_width(char **s, format	*ptr)
 {
@@ -87,24 +40,24 @@ void	get_precesion(char **s, format	*ptr)
 
 void	get_form_specifier(char **s, format	*ptr)
 {
-	char	*set = "xXscduip%";
-	while (*set)
+	if (one_of(**s, "xXscduip%"))
 	{
-		if (**s == *set)
-		{
-			ptr->type = **s;
-			break;
-		}
-		set++;
+		if (**s == 'p')
+			ptr->hash = 1;
+		ptr->type = **s;
+		ptr->valid = TRUE;
+		(*s)++;
 	}
-	
 }
 
 format	*parse(char **s)
 {
 	format	*ptr;
+	char *copy;
 
-	ptr = malloc(sizeof(format));
+	copy = *s;
+	(*s)++;
+	ptr = ft_calloc(1, sizeof(format));
 	if (!ptr)
 		return (NULL);
 	get_flags(s, ptr);
@@ -112,6 +65,8 @@ format	*parse(char **s)
 	get_precesion(s, ptr);
 	get_lenght(s, ptr);
 	get_form_specifier(s, ptr);
+	if (!ptr->valid)
+		*s = copy;
 	return (ptr);
 }
 

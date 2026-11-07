@@ -1,55 +1,94 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_d.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
+/*   Updated: 2026/11/07 00:37:22 by ayennaci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ft_printf.h"
+
+static void	on_off(format *ptr, long num)
+{
+	if (ptr->minus && !ptr->width_act)
+		ptr->minus = FALSE;
+	if (ptr->space && (ptr->plus || num < 0))
+		ptr->space = FALSE;
+	if (ptr->zero && (ptr->minus || !ptr->width_act || ptr->precesion))
+		ptr->zero = FALSE;
+	if (ptr->plus && num < 0)
+		ptr->plus = FALSE;
+	if (num < 0)
+		ptr->lenght += 1;
+}
+
+static void	left_aligned(format *ptr, long num, int tmp, int len)
+{
+	int s;
+
+	s = 0;
+	if (ptr->space || ptr->plus)
+		s = -1;
+	if (ptr->space && !ptr->plus)
+		ft_putchar(' ');
+	if (ptr->plus)
+		ft_putchar('+');
+	if (num < 0)
+		ft_putchar('-');
+	handle_zero(tmp - len);
+	ft_put_nbr_base(BASE_10, num, ft_strlen(BASE_10));
+	handle_space(ptr->width - tmp + s);
+}
+
+static void right_aligned(format *ptr, long num, int tmp, int len)
+{
+	int s;
+
+	s = 0;
+	if (ptr->space || ptr->plus)
+		s = -1;
+	
+	if (ptr->zero)
+	{
+		if (ptr->plus)
+			ft_putchar('+');
+		if (num < 0)
+			ft_putchar('-');
+		handle_zero(ptr->width - tmp + s);
+	}
+	else
+	{
+		handle_space(ptr->width - tmp + s);
+		if (ptr->plus)
+		ft_putchar('+');
+	}
+	if (ptr->space && !ptr->plus)
+		ft_putchar(' ');
+	handle_zero(tmp - len);
+	ft_put_nbr_base(BASE_10, num, ft_strlen(BASE_10));
+}
 
 int	handle_d(long num, format *ptr)
 {
 	int	len;
-	int tmp;
-	//int nbr;
+	int	tmp;
 
-	tmp = 0;
+	on_off(ptr, num);
 	len = calc_num_base(10, num);
-	
-	if (ptr->lenght_act && len < ptr->lenght)
+	if (len < ptr->lenght)
 		tmp = ptr->lenght;
 	else
 		tmp = len;
-	if (ptr->plus || ptr->space)
-		tmp += 1;
-	if (ptr->width_act)
-	{
-		if(tmp < ptr->width)
-			ptr->width = ptr->width - tmp;
-		else
-			ptr->width = 0;
-	}
 	if (ptr->minus)
-	{
-		if (ptr->plus && num >= 0)
-			ft_putchar('+');
-		ft_put_nbr_base("012345689", num, ft_strlen("012345689"));
-		handle_space(ptr->width);
-	}
+		left_aligned(ptr, num, tmp, len);
 	else
-	{
-		if (ptr->width_act)
-		{
-			if (ptr->zero && !ptr->lenght_act)
-				handle_zero(ptr->width);
-			else 
-				handle_space(ptr->width);
-			if (ptr->lenght_act)
-				handle_zero(tmp - len);
-		}
-		if (ptr->plus && num >= 0)
-			ft_putchar('+');
-		ft_put_nbr_base("0123456789", num, ft_strlen("0123456789"));
-	}
-	return 1;
+		right_aligned(ptr, num, tmp, len);
+	if (ptr->width > tmp)
+		return (ptr->width);
+	else
+		return (tmp);
 }
-
-//int	handle_d(long num, format *ptr)
-//{
-//	width(ptr, num);
-
-//	if ()
-//}

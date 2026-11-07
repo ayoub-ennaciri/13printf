@@ -1,5 +1,3 @@
-#include "../include/ft_printf.h"
-
 int	calc_num_base(int base, long num)
 {
 	int s;
@@ -12,6 +10,8 @@ int	calc_num_base(int base, long num)
 		s = 1;
 		num =  -num;
 	}
-
-	return (calc_num_base(base, num / base) + 1 + s);
+	if (base == 16 && num < 0)
+		return (calc_num_base(base, ((unsigned int) num) / base) + 1);
+	else
+		return (calc_num_base(base, num / base) + 1 + s);
 }

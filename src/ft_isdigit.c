@@ -6,11 +6,9 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/12 14:18:50 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/10/27 10:35:23 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/05 15:32:21 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../include/libft.h"
 
 int	ft_isdigit(int c)
 {

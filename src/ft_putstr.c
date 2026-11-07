@@ -6,12 +6,10 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 21:41:12 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/10/31 16:24:22 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/06 21:59:34 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
-#include "../include/parser.h"
 #include "../include/ft_printf.h"
 
 int	ft_putstr(char *str, size_t	len)
