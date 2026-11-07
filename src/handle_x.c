@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_x.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/06 22:14:26 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/07 10:24:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	left_aligned(format *ptr, long num, char *base)
 		tmp = len;
 	if (ptr->hash)
 		ft_putstr("0x", 0);
-	handle_zero(tmp - len);
+	handle_zero(tmp - len - (2 * ptr->hash));
 	ft_put_nbr_base(base, num, ft_strlen(base));
 	handle_space(ptr->width - tmp);
 	return (tmp);
@@ -52,7 +52,7 @@ static int right_aligned(format *ptr, long num, char *base)
 		tmp = ptr->lenght;
 	else
 		tmp = len;
-	handle_space(ptr->width - tmp);
+	handle_space(ptr->width - tmp  - (2 * ptr->hash));
 	if (ptr->hash)
 		ft_putstr("0x", 0);
 	handle_zero(tmp - len);

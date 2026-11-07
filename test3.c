@@ -116,8 +116,8 @@ int main(void)
 	ft_printf("[%+010d]\n", positive);
     printf("[%+010d]\n", i);
 	ft_printf("[%+010d]\n", i);
-    printf("[% -10d]\n", positive);
-	ft_printf("[% -10d]\n", positive);
+    printf("[% -010d]\n", i);
+	ft_printf("[% -010d]\n", i);
     printf("[%#010x]\n", u);
 	ft_printf("[%#010x]\n", u);
     printf("[%#10X]\n", u);

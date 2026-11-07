@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_d.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/07 00:37:22 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/07 10:01:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void right_aligned(format *ptr, long num, int tmp, int len)
 	s = 0;
 	if (ptr->space || ptr->plus)
 		s = -1;
-	
 	if (ptr->zero)
 	{
 		if (ptr->plus)
@@ -64,7 +63,9 @@ static void right_aligned(format *ptr, long num, int tmp, int len)
 	{
 		handle_space(ptr->width - tmp + s);
 		if (ptr->plus)
-		ft_putchar('+');
+			ft_putchar('+');
+		if (num < 0)
+			ft_putchar('-');
 	}
 	if (ptr->space && !ptr->plus)
 		ft_putchar(' ');

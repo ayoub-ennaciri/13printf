@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   switcher.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:02:47 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/06 23:12:28 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/07 10:11:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ int	manage_form_specifiers(char **s, va_list *args)
 		handle_d(va_arg(*args, int), ptr);
 	else if (ptr->type == 'u')
 		handle_d(va_arg(*args, unsigned int), ptr);
-	else if (ptr->type == 'x' || ptr->type == 'p')
+	else if (ptr->type == 'x')
 		handle_x(va_arg(*args, int), ptr, BASE_16_x);
 	else if (ptr->type == 'X')
 		handle_x(va_arg(*args, int), ptr, BASE_16_X);
+	else if (ptr->type == 'p')
+		handle_x(va_arg(*args, unsigned long), ptr, BASE_16_x);
 	else if (ptr->type == '%')
 		ft_putchar('%');
 	return (1);
