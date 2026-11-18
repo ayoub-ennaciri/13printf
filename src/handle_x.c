@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/07 17:52:35 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/12 14:24:12 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int right_aligned(format *ptr, long num, char *base)
 	handle_space(ptr->width - tmp  - (2 * ptr->hash));
 	if (num && ptr->hash)
 		ft_putstr("0x", 0);
-	handle_zero(	);
+	handle_zero(		 );
 	if (!num && ptr->lenght_act && !ptr->lenght)
 		return;
 	ft_put_nbr_base(base, num, ft_strlen(base));
