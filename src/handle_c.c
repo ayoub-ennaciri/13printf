@@ -1,6 +1,6 @@
 #include "../include/ft_printf.h"
 
-void	handle_c(char c, format *ptr)
+int	handle_c(char c, format *ptr)
 {
 	if (ptr->minus)
 	{
@@ -12,4 +12,5 @@ void	handle_c(char c, format *ptr)
 		handle_space(ptr->width - 1);
 		ft_putchar(c);
 	}
+	return (1);
 }

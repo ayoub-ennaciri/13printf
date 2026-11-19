@@ -6,12 +6,16 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 14:16:29 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/05 15:44:56 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/19 10:30:43 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARCER_H
 #define PARCER_H
+
+#include <stdarg.h>
+#include "parser.h"
+#include "libft.h"
 
 #define	TRUE	1
 #define	FALSE	0

@@ -6,75 +6,54 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/12 14:24:12 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/19 22:18:41 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
+#include "../include/printing.h"
+#include "../include/calculations.h"
 
-static void	on_off(format *ptr, long num)
+static void handle_left(long num, format *ptr, char *base, char *prefix)
 {
-	if (ptr->minus && !ptr->width_act)
-		ptr->minus = FALSE;
-	if (ptr->space && (ptr->plus || num < 0))
-		ptr->space = FALSE;
-	if (ptr->zero && (ptr->minus || !ptr->width_act || ptr->precesion))
-		ptr->zero = FALSE;
-	if (ptr->plus && num < 0)
-		ptr->plus = FALSE;	
+		if (num && ptr->hash)
+			write(1, prefix, 2);
+		if (ptr->precesion)
+			handle_zero(ptr->lenght);
+		if(!(ptr->precesion  && !num))
+			ft_put_nbr_base(base,(unsigned int) num, ft_strlen(base));
+		handle_space(ptr->width);
 }
-
-static int	left_aligned(format *ptr, long num, char *base)
+static void handle_right(long num, format *ptr, char *base, char *prefix)
 {
-	int	len;
-	int	tmp;
-
-	len = calc_num_base(16, num);
-	if (len < ptr->lenght)
-		tmp = ptr->lenght;
+	
+	if (!(!ptr->precesion && ptr->zero))
+		handle_space(ptr->width);
 	else
-		tmp = len;
+	{
+		if (num && ptr->hash)
+		{
+			ptr->hash = 0;
+			write(1, prefix, 2);
+		}
+		handle_zero(ptr->width);
+	}
 	if (num && ptr->hash)
-		ft_putstr("0x", 0);
-	handle_zero(tmp - (2 * ptr->hash) - len );
-	if (!num && ptr->lenght_act && !ptr->lenght);
-	else
-		ft_put_nbr_base(base, num, ft_strlen(base));
-	handle_space(ptr->width - tmp);
-	return (tmp);
+		write(1, prefix, 2);
+	if (ptr->precesion)
+	{
+		handle_zero(ptr->lenght);
+	}
+	if(!(ptr->precesion && !num))
+		ft_put_nbr_base(base,(unsigned int) num, ft_strlen(base));
 }
 
-static int right_aligned(format *ptr, long num, char *base)
+int	handle_x(long num, format *ptr, char *base, char *prefix)
 {
-	int	len;
-	int	tmp;
-
-	len = calc_num_base(16, num);
-	if (len < ptr->lenght)
-		tmp = ptr->lenght;
-	else
-		tmp = len;
-	handle_space(ptr->width - tmp  - (2 * ptr->hash));
-	if (num && ptr->hash)
-		ft_putstr("0x", 0);
-	handle_zero(		 );
-	if (!num && ptr->lenght_act && !ptr->lenght)
-		return;
-	ft_put_nbr_base(base, num, ft_strlen(base));
-	return (tmp);
-}
-
-int	handle_x(long num, format *ptr, char *base)
-{
-	int	tmp;
-
-	on_off(ptr, num);
+	calculat_width_lenght(ptr, &num);
 	if (ptr->minus)
-		tmp = left_aligned(ptr, num, base);
+		handle_left(num, ptr, base, prefix);
 	else
-		tmp = right_aligned(ptr, num, base);
-	if (ptr->width > tmp)
-		return (ptr->width);
-	else
-		return (tmp);
+		handle_right(num, ptr, base, prefix);
+		return (0);
 }

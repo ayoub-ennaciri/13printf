@@ -28,7 +28,7 @@ int main()
 	//	token_head = token_head->next;
 	//}
 
-	printf("%0 20d", 10);
+	printf("% 2.5d", -0);
 	
 	return 0;
 }
