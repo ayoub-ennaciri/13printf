@@ -3,10 +3,10 @@
 
 #include "libft.h"
 
-void	handle_zero(int	len);
-void	handle_space(int len);
-int		ft_putstr(char *str, size_t	len);
-void	ft_put_nbr_base(char *base, long num,size_t base_len);
+int		handle_zero(int	len);
+int		handle_space(int len);
+int		ft_putstr(char *str, format *ptr);
+int		ft_put_nbr_base(int printed_len, char *base, long num,long base_len);
 int		ft_putchar(int c);
 
 #endif

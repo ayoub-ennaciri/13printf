@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 14:16:03 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/06 22:25:15 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/20 14:54:20 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ format	*parse(char **s)
 	get_form_specifier(s, ptr);
 	if (!ptr->valid)
 		*s = copy;
+	
 	return (ptr);
 }
 

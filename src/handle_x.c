@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/19 22:18:41 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/20 13:09:45 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ int	handle_x(long num, format *ptr, char *base, char *prefix)
 		handle_left(num, ptr, base, prefix);
 	else
 		handle_right(num, ptr, base, prefix);
-		return (0);
+	return (ptr->width + ptr->lenght);
 }

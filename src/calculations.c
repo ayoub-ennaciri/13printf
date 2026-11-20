@@ -16,6 +16,7 @@ int	calc_num_base(int base, long num, format *ptr)
 		return (calc_num_base(base, ((unsigned int) num) / base, ptr) + 1);
 	else if (num)
 		return (calc_num_base(base, num / base, ptr) + 1 + s);
+	return (0);
 }
 
 int	calculat_lenght(format *ptr, void *var)
@@ -51,12 +52,19 @@ int calculat_width_lenght(format *ptr, void *var)
 		ptr->width -= 2;
 	if (ptr->width)
 	{
-		if (ptr->precesion && ptr->lenght && ptr->lenght > len)
+		if (ptr->type == 's')
+		{
+			if (ptr->precesion && ptr->lenght < len)
+				ptr->width -= ptr->lenght;
+			else
+				ptr->width -= len;
+		}
+		else if (ptr->precesion && ptr->lenght && ptr->lenght > len)
 			ptr->width -= ptr->lenght;
 		else
 			ptr->width -= len;
 	}
-	if (ptr->precesion && (ptr->lenght = ptr->lenght - len) < 0)
+	if (ptr->type != 's' && ptr->precesion && (ptr->lenght = ptr->lenght - len) < 0)
 		ptr->lenght = 0;
 	if (ptr->width < 0)
 		ptr->width = 0;

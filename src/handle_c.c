@@ -1,4 +1,5 @@
 #include "../include/ft_printf.h"
+#include "../include/printing.h"
 
 int	handle_c(char c, format *ptr)
 {

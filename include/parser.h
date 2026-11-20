@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 14:16:29 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/19 10:30:43 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/20 14:52:43 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct format
 	bol		width_act;
 	int		lenght;
 	int		width;
+	int		total_length;
+	bol		error;
 }format;
 
 format	*parse(char **s);
