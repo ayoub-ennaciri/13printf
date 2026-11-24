@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 14:16:03 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/20 14:54:20 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/24 12:38:01 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_form_specifier(char **s, format	*ptr)
 		ptr->type = **s;
 		ptr->valid = TRUE;
 		(*s)++;
-	}
+	};
 }
 
 format	*parse(char **s)
@@ -66,8 +66,11 @@ format	*parse(char **s)
 	get_lenght(s, ptr);
 	get_form_specifier(s, ptr);
 	if (!ptr->valid)
+	{
+		free(ptr);
 		*s = copy;
-	
+		return (NULL);
+	}
 	return (ptr);
 }
 

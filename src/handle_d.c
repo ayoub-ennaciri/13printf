@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/20 13:08:35 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/24 11:09:11 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,44 +17,44 @@
 static void handle_left(long num, format *ptr)
 {
 	if (num < 0)
-			ptr->total_length += ft_putchar('-');
+			ptr->total_length += ft_putchar('-', ptr);
 		else if (num >= 0 && ptr->plus)
-			ptr->total_length += ft_putchar('+');
+			ptr->total_length += ft_putchar('+', ptr);
 		else if (num >= 0 && ptr->space)
-			ptr->total_length += ft_putchar(' ');	
+			ptr->total_length += ft_putchar(' ', ptr);	
 		if (ptr->precesion)
-			ptr->total_length += handle_zero(ptr->lenght);
+			ptr->total_length += handle_zero(ptr->lenght, ptr);
 		if(!(ptr->precesion  && !num))
-			ptr->total_length += ft_put_nbr_base(0, BASE_10, num, ft_strlen(BASE_10));
-		ptr->total_length += handle_space(ptr->width);
+			ptr->total_length += ft_put_nbr_base(0, BASE_10, num, ft_strlen(BASE_10), ptr);
+		ptr->total_length += handle_space(ptr->width, ptr);
 }
 static void handle_right(long num, format *ptr)
 {
 	if (!ptr->precesion && ptr->zero)
 	{
 		if (num < 0)
-			ptr->total_length += ft_putchar('-');
+			ptr->total_length += ft_putchar('-', ptr);
 		else if (num >= 0 && ptr->plus)
-			ptr->total_length += ft_putchar('+');
+			ptr->total_length += ft_putchar('+', ptr);
 		else if (num >= 0 && ptr->space)
-			ptr->total_length += ft_putchar(' ');		
-		ptr->total_length += handle_zero(ptr->width);
+			ptr->total_length += ft_putchar(' ', ptr);		
+		ptr->total_length += handle_zero(ptr->width, ptr);
 	}
 	else
 	{
-		ptr->total_length += handle_space(ptr->width);
+		ptr->total_length += handle_space(ptr->width, ptr);
 		if (num < 0)
-			ptr->total_length += ft_putchar('-');
+			ptr->total_length += ft_putchar('-', ptr);
 		else if (num >= 0 && ptr->plus)
-			ptr->total_length += ft_putchar('+');
+			ptr->total_length += ft_putchar('+', ptr);
 		else if (num >= 0 && ptr->space)
-			ptr->total_length += ft_putchar(' ');		
+			ptr->total_length += ft_putchar(' ', ptr);		
 	}
 	
 	if (ptr->precesion)
-		ptr->total_length += handle_zero(ptr->lenght);
+		ptr->total_length += handle_zero(ptr->lenght, ptr);
 	if(!(ptr->precesion && !num))
-		ptr->total_length += ft_put_nbr_base(0, BASE_10, num, ft_strlen(BASE_10));
+		ptr->total_length += ft_put_nbr_base(0, BASE_10, num, ft_strlen(BASE_10), ptr);
 }
 
 int	handle_d(long num, format *ptr)

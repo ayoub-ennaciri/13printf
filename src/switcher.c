@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:02:47 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/20 14:57:10 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/24 19:58:48 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,36 @@
 
 int		handle_s(char *s, format *ptr)
 {
+	if (!s)
+	{
+		ptr->total_length += ft_putstr("(null)", ptr);
+		return (ptr->total_length);
+	}
+		
 	calculat_width_lenght(ptr, (void *)s);
 	if (ptr->minus)
 	{
-		ft_putstr(s, ptr);
-		handle_space(ptr->width);
+		ptr->total_length += ft_putstr(s, ptr);
+		ptr->total_length += handle_space(ptr->width, ptr);
 	}
 	else
 	{
-		handle_space(ptr->width);
-		ft_putstr(s, ptr);
+		ptr->total_length += handle_space(ptr->width, ptr);
+		ptr->total_length += ft_putstr(s, ptr);
 	}
-	return (ptr->width + ptr->lenght);
+	return (ptr->total_length);
 }
 
-
+int idk(format *ptr, int total_len)
+{
+	if (ptr->error)
+	{
+		free(ptr);
+		return (-1);
+	}
+	free(ptr);
+	return (total_len);
+}
 
 int	manage_form_specifiers(char **s, va_list *args)
 {
@@ -42,10 +57,7 @@ int	manage_form_specifiers(char **s, va_list *args)
 	total_len = 0;
 	ptr = parse(s);
 	if (!ptr->valid)
-	{
-		free(ptr);
 		return (0);
-	}
 	else if (ptr->type == 's')
 		total_len = handle_s(va_arg(*args, char *), ptr);
 	else if (ptr->type == 'c')
@@ -61,11 +73,6 @@ int	manage_form_specifiers(char **s, va_list *args)
 	else if (ptr->type == 'p')
 		total_len = handle_x(va_arg(*args, unsigned long), ptr, BASE_16_x, x);
 	else if (ptr->type == '%')
-	{
-		ft_putchar('%');
-		free(ptr);
-		return (1);
-	}
-		free(ptr);
-	return (total_len);
+		total_len = ft_putchar('%', ptr);
+	return (idk(ptr, total_len));
 }

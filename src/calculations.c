@@ -27,8 +27,8 @@ int	calculat_lenght(format *ptr, void *var)
 		var_len = calc_num_base(10, *((int *)var), ptr);
 	if (ptr->type == 'u')
 		var_len = calc_num_base(10, *((unsigned int *)var), ptr);
-	if (ptr->type == 'x' || ptr->type == 'X' || ptr->type == 'P')
-		var_len = calc_num_base(16, *((int *)var), ptr);
+	if (ptr->type == 'x' || ptr->type == 'X' || ptr->type == 'p')
+		var_len = calc_num_base(16, *((unsigned long *)var), ptr);
 	if (ptr->type == 's')
 		var_len = ft_strlen((char *)var);
 	if (ptr->type == 'c')

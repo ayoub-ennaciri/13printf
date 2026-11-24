@@ -6,7 +6,7 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 16:33:58 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/20 13:09:45 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/24 20:12:48 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,20 @@
 #include "../include/printing.h"
 #include "../include/calculations.h"
 
-static void handle_left(long num, format *ptr, char *base, char *prefix)
+static void handle_left(long long num, format *ptr, char *base, char *prefix)
 {
 		if (num && ptr->hash)
-			write(1, prefix, 2);
+			ptr->total_length += write(1, prefix, 2);
 		if (ptr->precesion)
-			handle_zero(ptr->lenght);
+			ptr->total_length += handle_zero(ptr->lenght, ptr);
 		if(!(ptr->precesion  && !num))
-			ft_put_nbr_base(base,(unsigned int) num, ft_strlen(base));
-		handle_space(ptr->width);
+			ptr->total_length += ft_put_nbr_base(0, base,(unsigned long) num, ft_strlen(base), ptr);
+		ptr->total_length += handle_space(ptr->width, ptr);
 }
-static void handle_right(long num, format *ptr, char *base, char *prefix)
+static void handle_right(long long num, format *ptr, char *base, char *prefix)
 {
-	
 	if (!(!ptr->precesion && ptr->zero))
-		handle_space(ptr->width);
+		ptr->total_length += handle_space(ptr->width, ptr);
 	else
 	{
 		if (num && ptr->hash)
@@ -36,24 +35,30 @@ static void handle_right(long num, format *ptr, char *base, char *prefix)
 			ptr->hash = 0;
 			write(1, prefix, 2);
 		}
-		handle_zero(ptr->width);
+		ptr->total_length += handle_zero(ptr->width, ptr);
 	}
 	if (num && ptr->hash)
-		write(1, prefix, 2);
+		ptr->total_length += write(1, prefix, 2);
 	if (ptr->precesion)
 	{
-		handle_zero(ptr->lenght);
+		ptr->total_length += handle_zero(ptr->lenght, ptr);
 	}
-	if(!(ptr->precesion && !num))
-		ft_put_nbr_base(base,(unsigned int) num, ft_strlen(base));
+	if (ptr->type == 'p' && !num)
+	{
+		ptr->total_length += write(1, "(nil)", 5);
+	}
+	else if (ptr->type == 'p' && !(ptr->precesion && !num))
+		ptr->total_length += ft_put_nbr_base(0, base,(unsigned long) num, ft_strlen(base), ptr);
+	else if(!(ptr->precesion && !num))
+		ptr->total_length += ft_put_nbr_base(0, base,(unsigned int) num, ft_strlen(base), ptr);
 }
 
-int	handle_x(long num, format *ptr, char *base, char *prefix)
+int	handle_x(long long  num, format *ptr, char *base, char *prefix)
 {
 	calculat_width_lenght(ptr, &num);
 	if (ptr->minus)
 		handle_left(num, ptr, base, prefix);
 	else
 		handle_right(num, ptr, base, prefix);
-	return (ptr->width + ptr->lenght);
+	return (ptr->total_length);
 }

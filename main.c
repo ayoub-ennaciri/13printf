@@ -136,8 +136,8 @@ int	main(void)
 	//printf("[%.s]\n", "Hello");
 
 	//printf("\n========== RETURN VALUES ==========\n");
-	printf("ft_printf return: %d\n", ft_printf(" %d ", 0));
-	printf("printf return:    %d\n", printf(" %d ", 0));
+	printf("ft_printf return: %d\n", ft_printf(" %-9p %-10p ", LONG_MIN, LONG_MAX));
+	printf("printf return:    %d\n", printf(" %-9p %-10p ", LONG_MIN, LONG_MAX));
 	//printf("num : %d\n", ft_printf("%d\n", -1));
 
 	return (0);
