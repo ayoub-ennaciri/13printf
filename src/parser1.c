@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/25 13:12:57 by ayennaci          #+#    #+#             */
+/*   Updated: 2026/11/25 17:19:41 by ayennaci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/parser.h"
 #include "../include/libft.h"
 
-int one_of(char c, char	*set)
+int	one_of(char c, char	*set)
 {
 	while (*set)
 	{
-		if(c == *set)
+		if (c == *set)
 			return (1);
 		set++;
 	}
 	return (0);
 }
 
-void	get_flags(char **s, format	*ptr)
+void	get_flags(char **s, t_format	*ptr)
 {
 	while (one_of(**s, "+-0 #"))
 	{
@@ -30,7 +42,7 @@ void	get_flags(char **s, format	*ptr)
 	}
 }
 
-void	get_lenght(char **s, format	*ptr)
+void	get_lenght(char **s, t_format	*ptr)
 {
 	size_t	num;
 

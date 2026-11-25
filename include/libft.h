@@ -13,11 +13,11 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 
-int			ft_isdigit(int c);
-size_t		ft_strlen(const char *s);
+int		ft_isdigit(int c);
+size_t	ft_strlen(const char *s);
 void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

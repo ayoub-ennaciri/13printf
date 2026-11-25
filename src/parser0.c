@@ -6,14 +6,14 @@
 /*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 14:16:03 by ayennaci          #+#    #+#             */
-/*   Updated: 2026/11/24 12:38:01 by ayennaci         ###   ########.fr       */
+/*   Updated: 2026/11/25 17:28:31 by ayennaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parser.h"
 #include "../include/libft.h"
 
-void	get_width(char **s, format	*ptr)
+void	get_width(char **s, t_format	*ptr)
 {
 	size_t	num;
 
@@ -28,17 +28,16 @@ void	get_width(char **s, format	*ptr)
 	ptr->width = num;
 }
 
-void	get_precesion(char **s, format	*ptr)
+void	get_precesion(char **s, t_format	*ptr)
 {
-	if(!ptr->precesion && **s == '.')
+	if (!ptr->precesion && **s == '.')
 	{
 		ptr->precesion = TRUE;
 		(*s)++;
 	}
-	
 }
 
-void	get_form_specifier(char **s, format	*ptr)
+void	get_form_specifier(char **s, t_format	*ptr)
 {
 	if (one_of(**s, "xXscduip%"))
 	{
@@ -47,17 +46,17 @@ void	get_form_specifier(char **s, format	*ptr)
 		ptr->type = **s;
 		ptr->valid = TRUE;
 		(*s)++;
-	};
+	}
 }
 
-format	*parse(char **s)
+t_format	*parse(char **s)
 {
-	format	*ptr;
-	char *copy;
+	t_format	*ptr;
+	char		*copy;
 
 	copy = *s;
 	(*s)++;
-	ptr = ft_calloc(1, sizeof(format));
+	ptr = ft_calloc(1, sizeof(t_format));
 	if (!ptr)
 		return (NULL);
 	get_flags(s, ptr);
@@ -73,4 +72,3 @@ format	*parse(char **s)
 	}
 	return (ptr);
 }
-

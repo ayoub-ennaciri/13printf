@@ -1,32 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayennaci <ayennaci@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/25 13:14:09 by ayennaci          #+#    #+#             */
+/*   Updated: 2026/11/25 13:49:24 by ayennaci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ft_printf.h"
 #include "../include/printing.h"
 
-
-int ft_printf(const char *s, ...)
+int	ft_printf(const char *s, ...)
 {
-	char *copy;
-	va_list	args;
-	va_start(args,s);
-	int	len;
-	int	tmp_len;
+	char		*copy;
+	va_list		args;
+	int			len;
+	int			tmp_len;
 
 	copy = (char *)s;
 	len = 0;
+	va_start(args, s);
 	while (*copy)
 	{
 		if (*copy == '%')
 		{
-			if ((tmp_len = manage_form_specifiers(&copy, &args))== -1)
-				return (-1);
+			tmp_len = manage_form_specifiers(&copy, &args);
+			if (tmp_len == -1)
+				return (va_end(args), -1);
 			len += tmp_len;
 		}
+		else if (write(1, copy++, 1) == -1)
+			return (va_end(args), -1);
 		else
-		{
-			if (write(1, copy, 1) == -1)
-				return (-1);
-			copy++;
 			len++;
-		}
 	}
 	va_end(args);
 	return (len);
